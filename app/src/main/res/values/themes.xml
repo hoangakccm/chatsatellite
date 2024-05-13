@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DemoAppChat" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+<!--        <item name="colorPrimaryDark">#003157</item> &lt;!&ndash; Màu của các phần tạo chiều sâu, thanh thông báo, nhưng hiện không rõ ràng &ndash;&gt;-->
+        <item name="colorOnPrimary">#FFE3E3</item> <!-- Màu của văn bản trên thanh toolbar -->
+    </style>
+
+    <style name="Theme.DemoAppChat" parent="Base.Theme.DemoAppChat" />
+</resources>
