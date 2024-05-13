@@ -1,46 +1,55 @@
 package com.example.demoappchat
-import okhttp3.*
-import java.util.concurrent.TimeUnit
+
+import android.util.Log
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import org.json.JSONObject
 
 class WebSocketManager {
 
-    private var webSocket: WebSocket? = null
+    private var socket: Socket? = null
 
     fun connectToWebSocket() {
-        val client = OkHttpClient.Builder()
-            .readTimeout(3, TimeUnit.SECONDS)
-            .build()
-
-        val request = Request.Builder()
-            .url("ws://nhatkydientu.vn:5000") // Địa chỉ IP của máy chủ WebSocket
-            .build()
-
-        val listener = object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                super.onOpen(webSocket, response)
-                println("WebSocket connected")
+        try {
+            val opts = IO.Options().apply {
+                reconnection = true
+                timeout = 3000
+                query = "5"
             }
+            socket = IO.socket("http://nhatkydientu.vn:80", opts)
 
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
-                println("Received message from server: $text")
-                // Xử lý tin nhắn từ máy chủ ở đây
-            }
+            // Register event handlers
+            socket?.on(Socket.EVENT_CONNECT, onConnect)
+            socket?.on(Socket.EVENT_DISCONNECT, onDisconnect)
+            socket?.on("login_success", onLoginSuccess)
 
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                super.onFailure(webSocket, t, response)
-                println("WebSocket connection failed: ${t.message}")
-            }
+            socket?.connect()
+        } catch (e: Exception) {
+            Log.e("WebSocketManager", "3 Error connecting to WebSocket: ${e.message}")
         }
-
-        webSocket = client.newWebSocket(request, listener)
     }
 
     fun sendMessage(message: String) {
-        webSocket?.send(message)
+        socket?.emit("your_event_name", message)
     }
 
     fun disconnectWebSocket() {
-        webSocket?.cancel()
+        socket?.disconnect()
+    }
+
+    private val onConnect = Emitter.Listener {
+        Log.d("WebSocketManager", "1 Connected to server")
+    }
+
+    private val onDisconnect = Emitter.Listener {
+        Log.d("WebSocketManager", "2 Disconnected from server")
+    }
+
+    private val onLoginSuccess = Emitter.Listener { args ->
+        // Handle login success event
+        val data = args[0] as? JSONObject
+        Log.d("WebSocketManager", "4 Login success: $data")
+        // Process the login success data here
     }
 }

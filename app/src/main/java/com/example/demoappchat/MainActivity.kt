@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity() {
     private fun startNotificationService() {
         val serviceIntent = Intent(this, NotificationService::class.java)
         startService(serviceIntent)
+        val webSocketManager = WebSocketManager()
+        webSocketManager.connectToWebSocket()
     }
     private fun logout() {
         // Xoá SharedPreferences
