@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var userName: TextView
     private val sharedPrefFile = "com.example.demoappchat.sharedprefs"
-
+//    hoang comit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
