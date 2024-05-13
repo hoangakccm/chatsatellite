@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userName: TextView
     private val sharedPrefFile = "com.example.demoappchat.sharedprefs"
 //    hoang comit
+    //khanh commit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
