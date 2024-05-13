@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage"
