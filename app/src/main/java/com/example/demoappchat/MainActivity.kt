@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var userName: TextView
     private val sharedPrefFile = "com.example.demoappchat.sharedprefs"
-
+//    hoang comit
+    //khanh kcommit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity() {
     private fun startNotificationService() {
         val serviceIntent = Intent(this, NotificationService::class.java)
         startService(serviceIntent)
+        val webSocketManager = WebSocketManager()
+        webSocketManager.connectToWebSocket()
     }
     private fun logout() {
         // Xoá SharedPreferences

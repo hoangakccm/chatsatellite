@@ -65,36 +65,8 @@ class NotificationService : Service() {
     }
 
     private fun connectToServerAndListen() {
-        Log.d(TAG, "3 connectToServerAndListen")
-
-        val client = OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .build()
-
-        val request = Request.Builder()
-            .url("ws://192.168.100.7:80") // Địa chỉ IP của máy chủ WebSocket
-            .build()
-
-        val listener = object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                super.onOpen(webSocket, response)
-                Log.d(TAG, "4 WebSocket connection opened")
-            }
-
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
-                Log.d(TAG, "5 Received message: $text")
-                showNotification(text)
-            }
-
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                super.onFailure(webSocket, t, response)
-                Log.e(TAG, "6 WebSocket connection failed", t)
-            }
-        }
-
-        webSocket = client.newWebSocket(request, listener)
+        val webSocketManager = WebSocketManager()
+        webSocketManager.connectToWebSocket()
     }
 
     private fun showNotification(message: String) {

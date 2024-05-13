@@ -55,12 +55,13 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
     implementation ("com.mesibo.api:webrtc:1.0.5")
+
+    implementation ("io.socket:socket.io-client:1.0.0")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.storage)
-    implementation(libs.firebase.messaging)
     implementation(libs.annotation)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
