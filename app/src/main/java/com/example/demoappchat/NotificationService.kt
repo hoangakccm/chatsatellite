@@ -106,6 +106,7 @@ class NotificationService : Service() {
             putExtra("device_id", deviceId)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
+        //
         val pendingIntent = PendingIntent.getActivity(
             applicationContext, 0, notificationIntent,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
