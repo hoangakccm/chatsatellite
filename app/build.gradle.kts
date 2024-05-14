@@ -56,7 +56,7 @@ dependencies {
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
     implementation ("com.mesibo.api:webrtc:1.0.5")
 
-    implementation ("io.socket:socket.io-client:1.0.0")
+    implementation ("io.socket:socket.io-client:2.1.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)

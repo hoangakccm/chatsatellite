@@ -29,6 +29,7 @@ class DeviceAdapter(
     inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val deviceNameTextView: TextView = itemView.findViewById(R.id.deviceName)
         init {
+
             // Thêm lắng nghe sự kiện khi itemView được nhấn
             itemView.setOnClickListener {
                 // Lấy vị trí của item được nhấn

@@ -4,6 +4,7 @@ import android.util.Log
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import org.json.JSONException
 import org.json.JSONObject
 
 class WebSocketManager {
@@ -15,18 +16,19 @@ class WebSocketManager {
             val opts = IO.Options().apply {
                 reconnection = true
                 timeout = 3000
-                query = "5"
+                query = "user_id=4"
             }
-            socket = IO.socket("http://nhatkydientu.vn:80", opts)
+            socket = IO.socket(AppConfig.BASE_URL, opts)
+            Log.d("WebSocketManager", "Connecting to WebSocket...")
 
-            // Register event handlers
             socket?.on(Socket.EVENT_CONNECT, onConnect)
             socket?.on(Socket.EVENT_DISCONNECT, onDisconnect)
             socket?.on("login_success", onLoginSuccess)
+            socket?.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
 
             socket?.connect()
         } catch (e: Exception) {
-            Log.e("WebSocketManager", "3 Error connecting to WebSocket: ${e.message}")
+            Log.e("WebSocketManager", "Error connecting to WebSocket: ${e.message}")
         }
     }
 
@@ -39,17 +41,32 @@ class WebSocketManager {
     }
 
     private val onConnect = Emitter.Listener {
-        Log.d("WebSocketManager", "1 Connected to server")
+        Log.d("WebSocketManager", "Connected to server")
     }
 
     private val onDisconnect = Emitter.Listener {
-        Log.d("WebSocketManager", "2 Disconnected from server")
+        Log.d("WebSocketManager", "Disconnected from server")
     }
 
     private val onLoginSuccess = Emitter.Listener { args ->
-        // Handle login success event
         val data = args[0] as? JSONObject
-        Log.d("WebSocketManager", "4 Login success: $data")
-        // Process the login success data here
+        data?.let {
+            try {
+                val device_id = it.getString("device_id")
+                val user_id = it.getString("user_id")
+                Log.d("WebSocketManager", "User $user_id logged in with device $device_id")
+            } catch (e: JSONException) {
+                Log.e("WebSocketManager", "Error parsing login success data: ${e.message}")
+            }
+        }
+    }
+
+    private val onConnectError = Emitter.Listener { args ->
+        val error = args[0] as Exception
+        Log.e("WebSocketManager", "Connection error: ${error.message}")
+    }
+
+    private val onReconnectAttempt = Emitter.Listener {
+        Log.d("WebSocketManager", "Reconnecting...")
     }
 }
