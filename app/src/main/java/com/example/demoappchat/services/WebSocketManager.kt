@@ -17,7 +17,14 @@ class WebSocketManager {
                 timeout = 3000
                 query = "5"
             }
-            socket = IO.socket("http://nhatkydientu.vn:80", opts)
+            socket = IO.socket("https://nhatkydientu.vn:80", opts)
+
+            socket?.on(Socket.EVENT_CONNECT_ERROR) { args ->
+                Log.e("WebSocketManager", "Connect error: ${args[0]}")
+            }
+            socket?.on(Socket.EVENT_CONNECT_TIMEOUT) { args ->
+                Log.e("WebSocketManager", "Connect timeout: ${args[0]}")
+            }
 
             // Register event handlers
             socket?.on(Socket.EVENT_CONNECT, onConnect)
