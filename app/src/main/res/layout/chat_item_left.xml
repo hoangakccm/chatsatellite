@@ -4,7 +4,7 @@
     android:layout_width="300dp"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="4dp"
+    android:padding="5dp"
     android:id="@+id/recyclerLayout"
     android:layout_height="wrap_content">
 
